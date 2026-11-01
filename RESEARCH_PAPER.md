@@ -92,33 +92,32 @@ Our proposed framework bridges this gap by marrying an edge-viable convolutional
 *Fig. 1. Architectural schematic of the proposed Dual-Encoder Multimodal Intelligence and Damage Assessment Network.*
 
 ### A. Problem Formulation and Approach
-We formulate disaster intelligence as a synchronized multi-task learning and evidence fusion problem. Given an incident stream $k$, the input consists of a visual payload $I_k \in \mathbb{R}^{H \times W \times C}$ and a textual narrative $T_k = \{w_1, w_2, \dots, w_L\}$, accompanied by geospatial metadata $\mathcal{G}_k = (\text{lat}_k, \text{lon}_k)$ and timestamp $\tau_k$.
+We formulate disaster intelligence as a synchronized multi-task learning and evidence fusion problem. Given an incident stream *k*, the input consists of a visual payload *I<sub>k</sub>* of dimensions *H* &times; *W* &times; *C*, a textual narrative *T<sub>k</sub>* composed of word tokens {*w*<sub>1</sub>, *w*<sub>2</sub>, ..., *w<sub>L</sub>*}, geospatial telemetry *G<sub>k</sub>* = (lat, lon), and timestamp &tau;<sub>*k*</sub>.
 
 The objective is threefold:
-1. Predict the primary hazard category $\hat{y}_{\text{disaster}} \in \mathcal{C}_{\text{disaster}}$ where:
-   $$\mathcal{C}_{\text{disaster}} = \{\text{Flood}, \text{Wildfire}, \text{Earthquake}, \text{Cyclone}, \text{Landslide}, \text{Normal/Infrastructure}\}$$
-2. Classify structural building integrity $\hat{y}_{\text{damage}} \in \mathcal{D}$ where:
-   $$\mathcal{D} = \{\text{No Damage}, \text{Minor Damage}, \text{Major Damage}, \text{Destroyed}\}$$
+1. Predict the primary hazard category:
+   *y*<sub>disaster</sub> &isin; {Flood, Wildfire, Earthquake, Cyclone, Landslide, Normal}
+2. Classify structural building integrity:
+   *y*<sub>damage</sub> &isin; {No Damage, Minor Damage, Major Damage, Destroyed}
 3. Compute a deterministic, explainable priority triage tier:
-   $$\hat{P}_k \in \{\text{P1\_CRITICAL}, \text{P2\_HIGH}, \text{P3\_MODERATE}, \text{P4\_LOW}\}$$
+   *P<sub>k</sub>* &isin; {P1 Critical, P2 High, P3 Moderate, P4 Low}
 
 ### B. System Architecture Overview
 The overall architecture comprises five coordinated modules, illustrated in Fig. 1:
 1. *Visual Encoder Subsystem*: An EfficientNet-B2 backbone pre-trained on ImageNet-1K and fine-tuned on disaster datasets. EfficientNet-B2 optimizes compound scaling across network depth, width, and resolution:
-   $$v_{\text{raw}} = f_{\text{EfficientNet}}(I_k) \in \mathbb{R}^{1408}$$
-   This vector passes through batch normalization and linear projection to yield $v \in \mathbb{R}^{512}$.
-2. *Language Encoder Subsystem*: A fine-tuned DistilBERT transformer (6 layers, 12 attention heads, 66M parameters). DistilBERT retains 97% of BERT’s language comprehension capacity while operating 60% faster. Text tokens are mapped through wordpiece tokenization:
-   $$t_{\text{raw}} = \text{DistilBERT}(\text{[CLS]}, w_1, \dots, w_L)_{\text{[CLS]}} \in \mathbb{R}^{768}$$
-   Projected through batch normalization and linear transformation: $t \in \mathbb{R}^{512}$.
+   *v*<sub>raw</sub> = *f*<sub>EfficientNet</sub>(*I<sub>k</sub>*) &isin; &reals;<sup>1408</sup> &nbsp;&longrightarrow;&nbsp; *v* = LayerNorm(Linear(*v*<sub>raw</sub>)) &isin; &reals;<sup>512</sup>
+2. *Language Encoder Subsystem*: A fine-tuned DistilBERT transformer (6 layers, 12 attention heads, 66M parameters). DistilBERT retains 97% of BERT's language comprehension capacity while operating 60% faster. Text tokens are mapped through wordpiece tokenization:
+   *t*<sub>raw</sub> = DistilBERT([CLS], *w*<sub>1</sub>, ..., *w<sub>L</sub>*) &isin; &reals;<sup>768</sup> &nbsp;&longrightarrow;&nbsp; *t* = LayerNorm(Linear(*t*<sub>raw</sub>)) &isin; &reals;<sup>512</sup>
 3. *Cross-Modal Gated Fusion Layer*: Visual and textual vectors are combined via concatenation followed by non-linear projection:
-   $$z_{\text{fused}} = \text{ReLU}\left(W_f [v \parallel t] + b_f\right), \quad z_{\text{fused}} \in \mathbb{R}^{512}$$
-   An attention gating vector $g = \sigma(W_g z_{\text{fused}} + b_g)$ modulates feature saliency, producing the final category logits:
-   $$\hat{y}_{\text{disaster}} = \text{Softmax}\left(W_c (g \odot z_{\text{fused}}) + b_c\right)$$
-4. *Satellite Damage Classifier*: A dedicated ResNet-50 network receiving pre- and post-disaster satellite imagery tiles to classify structural destruction tiers $\hat{y}_{\text{damage}}$.
+   *z*<sub>fused</sub> = ReLU(*W<sub>f</sub>* &middot; [*v* || *t*] + *b<sub>f</sub>*), &nbsp; where *z*<sub>fused</sub> &isin; &reals;<sup>512</sup>
+   
+   An attention gating vector *g* = &sigma;(*W<sub>g</sub>* &middot; *z*<sub>fused</sub> + *b<sub>g</sub>*) modulates feature saliency, producing the final category logits:
+   *y*<sub>disaster</sub> = Softmax(*W<sub>c</sub>* &middot; [*g* &odot; *z*<sub>fused</sub>] + *b<sub>c</sub>*)
+4. *Satellite Damage Classifier*: A dedicated ResNet-50 network receiving pre- and post-disaster satellite imagery tiles to classify structural destruction tiers *y*<sub>damage</sub>.
 5. *Real-Time Edge Detector*: An Ultralytics YOLOv8n network executing single-stage multi-class bounding box regression for critical entities (vehicles, boats, personnel, flood zones, structural fissures) at ~12 ms per frame.
 
 ### C. Data Construction and Representation
-Inputs undergo rigorous normalization before entering the neural pathways. Image matrices are resized to $224 \times 224$ pixels and standardized using ImageNet mean ($\mu = [0.485, 0.456, 0.406]$) and standard deviation ($\sigma = [0.229, 0.224, 0.225]$). For textual sequences, text is lowercased, URLs, handles, and anomalous regex artifacts are stripped, and sequences are padded or truncated to a maximum length of 128 tokens.
+Inputs undergo rigorous normalization before entering the neural pathways. Image matrices are resized to 224 &times; 224 pixels and standardized using ImageNet mean (&mu; = [0.485, 0.456, 0.406]) and standard deviation (&sigma; = [0.229, 0.224, 0.225]). Text sequences are lowercased, regex artifacts are stripped, and sequences are padded or truncated to a maximum length of 128 tokens. Geospatial coordinates are mapped into a KD-Tree index for micro-second proximity queries to regional emergency shelters.
 
 ### D. Dataset Description and Preprocessing
 The model was trained, validated, and tested on a curated composite corpus integrating standardized international crisis benchmarks and operational disaster feeds:
@@ -127,12 +126,13 @@ The model was trained, validated, and tested on a curated composite corpus integ
 * **xBD Satellite Damage Dataset**: High-resolution pre- and post-disaster satellite overhead patches annotated with building destruction polygons [10].
 * **Operational Emergency Reports**: 3,000 multi-modal incident instances annotated across disaster categories, damage levels, and triage priorities.
 
-The corpus was partitioned using stratified sampling into **70% training** ($N = 2,100$), **15% validation** ($N = 450$), and **15% test** ($N = 450$) splits to ensure identical label distributions across sets.
+The corpus was partitioned using stratified sampling into **70% training** (*N* = 2,100), **15% validation** (*N* = 450), and **15% test** (*N* = 450) splits to ensure identical label distributions across sets.
 
 ### E. Feature Engineering and Priority Scoring Formulation
-To guarantee operational trust and eliminate deep learning black-box hazards in life-or-death dispatch decisions, our framework couples neural predictions with a deterministic priority scoring function $S \in [0, 100]$:
-$$S = \sum_{m \in \mathcal{F}_{\text{verified}}} w_m \cdot \mathbb{I}(m) - \sum_{n \in \mathcal{P}} p_n$$
-where $\mathcal{F}_{\text{verified}}$ denotes verified multimodal factors and $\mathcal{P}$ represents mitigating conditions. Table I outlines the explicit parameter weighting.
+To guarantee operational trust and eliminate deep learning black-box hazards in life-or-death dispatch decisions, our framework couples neural predictions with a deterministic priority scoring function (Score &isin; [0, 100]):
+Score = &sum; (*w<sub>m</sub>* &middot; *F<sub>m</sub>*) &minus; &sum; *P<sub>n</sub>*
+
+where *F<sub>m</sub>* denotes verified multimodal emergency factors and *P<sub>n</sub>* represents mitigating conditions. Table I outlines the explicit parameter weighting.
 
 TABLE I  
 TRIAGE FEATURE ATTRIBUTION AND WEIGHT SPECIFICATION  

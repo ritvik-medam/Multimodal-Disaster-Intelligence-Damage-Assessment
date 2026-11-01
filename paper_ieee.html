@@ -135,9 +135,10 @@
   }
   .formula-box {
     text-align: center;
-    font-style: italic;
+    font-style: normal;
     margin: 5px 0;
     font-size: 8.9pt;
+    line-height: 1.3;
   }
   ol.references {
     padding-left: 1.4em;
@@ -253,15 +254,15 @@ Our proposed framework bridges this gap by marrying an edge-viable convolutional
 
 <h3 class="subsec-heading">A. Problem Formulation and Approach</h3>
 <p>
-We formulate disaster intelligence as a synchronized multi-task learning and evidence fusion problem. Given an incident stream $k$, the input consists of a visual payload $I_k \in \mathbb{R}^{H \times W \times C}$ and a textual narrative $T_k = \{w_1, w_2, \dots, w_L\}$, accompanied by geospatial metadata $\mathcal{G}_k = (\text{lat}_k, \text{lon}_k)$ and timestamp $\tau_k$.
+We formulate disaster intelligence as a synchronized multi-task learning and evidence fusion problem. Given an incident stream <i>k</i>, the input consists of a visual payload <i>I<sub>k</sub></i> of dimensions <i>H</i> &times; <i>W</i> &times; <i>C</i>, a textual narrative <i>T<sub>k</sub></i> composed of word tokens {<i>w</i><sub>1</sub>, <i>w</i><sub>2</sub>, ..., <i>w<sub>L</sub></i>}, geospatial telemetry <i>G<sub>k</sub></i> = (lat, lon), and timestamp &tau;<sub><i>k</i></sub>.
 </p>
 <p>
 The objective is threefold:
 </p>
 <ul class="ieee-list">
-  <li>Predict the primary hazard category $\hat{y}_{\text{disaster}} \in \{\text{Flood}, \text{Wildfire}, \text{Earthquake}, \text{Cyclone}, \text{Landslide}, \text{Normal}\}$.</li>
-  <li>Classify structural building integrity $\hat{y}_{\text{damage}} \in \{\text{No Damage}, \text{Minor Damage}, \text{Major Damage}, \text{Destroyed}\}$.</li>
-  <li>Compute a deterministic, explainable priority triage tier $\hat{P}_k \in \{\text{P1\_CRITICAL}, \text{P2\_HIGH}, \text{P3\_MODERATE}, \text{P4\_LOW}\}$.</li>
+  <li>Predict the primary hazard category: <i>y</i><sub>disaster</sub> &isin; {Flood, Wildfire, Earthquake, Cyclone, Landslide, Normal}.</li>
+  <li>Classify structural building integrity: <i>y</i><sub>damage</sub> &isin; {No Damage, Minor Damage, Major Damage, Destroyed}.</li>
+  <li>Compute a deterministic, explainable priority triage tier: <i>P<sub>k</sub></i> &isin; {P1 Critical, P2 High, P3 Moderate, P4 Low}.</li>
 </ul>
 
 <h3 class="subsec-heading">B. System Architecture Overview</h3>
@@ -281,15 +282,15 @@ The overall architecture comprises five coordinated modules, illustrated in Fig.
     </div>
     <div style="display:flex; justify-content:space-around; margin-bottom:5px;">
       <div style="background:#bbdefb; border:1px solid #1976d2; padding:3px 6px; border-radius:3px; width:45%;">
-        <b>EfficientNet-B2</b><br>1408d Feature Vector
+        <b>EfficientNet-B2</b><br>1408-dim Feature Vector
       </div>
       <div style="background:#ffe0b2; border:1px solid #f57c00; padding:3px 6px; border-radius:3px; width:45%;">
-        <b>DistilBERT</b><br>768d [CLS] Embedding
+        <b>DistilBERT</b><br>768-dim [CLS] Embedding
       </div>
     </div>
     <div style="background:#e8f5e9; border:1px solid #388e3c; padding:4px; margin:4px 0; border-radius:3px;">
-      <b>Cross-Attention Projection Layer (512d) & Gated Fusion</b><br>
-      $z_{\text{fused}} = \text{ReLU}(W_f [v \parallel t] + b_f) \odot \sigma(W_g z_{\text{fused}} + b_g)$
+      <b>Cross-Modal Gated Fusion Layer (512-dim)</b><br>
+      <i>z</i><sub>fused</sub> = ReLU(<i>W<sub>f</sub></i> &middot; [<i>v</i> || <i>t</i>] + <i>b<sub>f</sub></i>) &odot; &sigma;(<i>W<sub>g</sub></i> &middot; <i>z</i><sub>fused</sub> + <i>b<sub>g</sub></i>)
     </div>
     <div style="display:flex; justify-content:space-between; margin-top:4px;">
       <div style="background:#fce4ec; border:1px solid #c2185b; padding:2px 5px; border-radius:3px; width:48%;">
@@ -307,25 +308,25 @@ The overall architecture comprises five coordinated modules, illustrated in Fig.
 1) <i>Visual Encoder Subsystem:</i> An EfficientNet-B2 backbone pre-trained on ImageNet-1K and fine-tuned on disaster datasets. EfficientNet-B2 optimizes compound scaling across depth, width, and resolution:
 </p>
 <div class="formula-box">
-  $v_{\text{raw}} = f_{\text{EfficientNet}}(I_k) \in \mathbb{R}^{1408} \quad \xrightarrow{\text{BN} + \text{Linear}} \quad v \in \mathbb{R}^{512}$
+  <i>v</i><sub>raw</sub> = <i>f</i><sub>EfficientNet</sub>(<i>I<sub>k</sub></i>) &isin; &reals;<sup>1408</sup> &nbsp;&longrightarrow;&nbsp; <i>v</i> = LayerNorm(Linear(<i>v</i><sub>raw</sub>)) &isin; &reals;<sup>512</sup>
 </div>
 <p>
 2) <i>Language Encoder Subsystem:</i> A fine-tuned DistilBERT transformer (6 layers, 12 attention heads, 66M parameters). DistilBERT retains 97% of BERT&rsquo;s comprehension while operating 60% faster:
 </p>
 <div class="formula-box">
-  $t_{\text{raw}} = \text{DistilBERT}(\text{[CLS]}, w_1, \dots, w_L) \in \mathbb{R}^{768} \quad \xrightarrow{\text{BN} + \text{Linear}} \quad t \in \mathbb{R}^{512}$
+  <i>t</i><sub>raw</sub> = DistilBERT([CLS], <i>w</i><sub>1</sub>, ..., <i>w<sub>L</sub></i>) &isin; &reals;<sup>768</sup> &nbsp;&longrightarrow;&nbsp; <i>t</i> = LayerNorm(Linear(<i>t</i><sub>raw</sub>)) &isin; &reals;<sup>512</sup>
 </div>
 <p>
 3) <i>Cross-Modal Gated Fusion Layer:</i> Visual and textual vectors are combined via concatenation followed by non-linear projection:
 </p>
 <div class="formula-box">
-  $z_{\text{fused}} = \text{ReLU}\left(W_f [v \parallel t] + b_f\right), \quad z_{\text{fused}} \in \mathbb{R}^{512}$
+  <i>z</i><sub>fused</sub> = ReLU(<i>W<sub>f</sub></i> &middot; [<i>v</i> || <i>t</i>] + <i>b<sub>f</sub></i>), &nbsp; where <i>z</i><sub>fused</sub> &isin; &reals;<sup>512</sup>
 </div>
 <div class="formula-box">
-  $\hat{y}_{\text{disaster}} = \text{Softmax}\left(W_c (\sigma(W_g z_{\text{fused}} + b_g) \odot z_{\text{fused}}) + b_c\right)$
+  <i>y</i><sub>disaster</sub> = Softmax(<i>W<sub>c</sub></i> &middot; [&sigma;(<i>W<sub>g</sub></i> &middot; <i>z</i><sub>fused</sub> + <i>b<sub>g</sub></i>) &odot; <i>z</i><sub>fused</sub>] + <i>b<sub>c</sub></i>)
 </div>
 <p>
-4) <i>Satellite Damage Classifier:</i> A dedicated ResNet-50 network receiving pre- and post-disaster satellite imagery tiles to classify structural destruction tiers $\hat{y}_{\text{damage}}$.
+4) <i>Satellite Damage Classifier:</i> A dedicated ResNet-50 network receiving pre- and post-disaster satellite imagery tiles to classify structural destruction tiers <i>y</i><sub>damage</sub>.
 </p>
 <p>
 5) <i>Real-Time Edge Detector:</i> An Ultralytics YOLOv8n network executing single-stage multi-class bounding box regression for critical entities (vehicles, boats, personnel, flood zones, structural fissures) at ~12 ms per frame.
@@ -333,7 +334,7 @@ The overall architecture comprises five coordinated modules, illustrated in Fig.
 
 <h3 class="subsec-heading">C. Data Construction and Representation</h3>
 <p>
-Inputs undergo normalization before entering the neural pathways. Image matrices are resized to $224 \times 224$ pixels and standardized using ImageNet mean ($\mu = [0.485, 0.456, 0.406]$) and standard deviation ($\sigma = [0.229, 0.224, 0.225]$). Text sequences are lowercased, regex artifacts are stripped, and sequences are padded or truncated to a maximum length of 128 tokens. Geospatial coordinates are mapped into a KD-Tree index for micro-second proximity queries to regional emergency shelters.
+Inputs undergo normalization before entering the neural pathways. Image matrices are resized to 224 &times; 224 pixels and standardized using ImageNet mean (&mu; = [0.485, 0.456, 0.406]) and standard deviation (&sigma; = [0.229, 0.224, 0.225]). Text sequences are lowercased, regex artifacts are stripped, and sequences are padded or truncated to a maximum length of 128 tokens. Geospatial coordinates are mapped into a KD-Tree index for micro-second proximity queries to regional emergency shelters.
 </p>
 
 <h3 class="subsec-heading">D. Dataset Description and Preprocessing</h3>
@@ -347,18 +348,18 @@ The model was trained, validated, and tested on a curated composite corpus integ
   <li><b>Operational Emergency Reports:</b> 3,000 multi-modal incident instances annotated across disaster categories, damage levels, and triage priorities.</li>
 </ul>
 <p>
-The corpus was partitioned using stratified sampling into <b>70% training</b> ($N = 2,100$), <b>15% validation</b> ($N = 450$), and <b>15% test</b> ($N = 450$) splits to ensure identical label distributions across sets.
+The corpus was partitioned using stratified sampling into <b>70% training</b> (<i>N</i> = 2,100), <b>15% validation</b> (<i>N</i> = 450), and <b>15% test</b> (<i>N</i> = 450) splits to ensure identical label distributions across sets.
 </p>
 
 <h3 class="subsec-heading">E. Feature Engineering and Priority Scoring Formulation</h3>
 <p>
-To guarantee operational trust and eliminate deep learning black-box hazards in life-or-death dispatch decisions, our framework couples neural predictions with a deterministic priority scoring function $S \in [0, 100]$:
+To guarantee operational trust and eliminate deep learning black-box hazards in life-or-death dispatch decisions, our framework couples neural predictions with a deterministic priority scoring function (Score &isin; [0, 100]):
 </p>
 <div class="formula-box">
-  $S = \sum_{m \in \mathcal{F}_{\text{verified}}} w_m \cdot \mathbb{I}(m) - \sum_{n \in \mathcal{P}} p_n$
+  <i>Score</i> = &sum; (<i>w<sub>m</sub></i> &middot; <i>F<sub>m</sub></i>) &minus; &sum; <i>P<sub>n</sub></i>
 </div>
 <p>
-where $\mathcal{F}_{\text{verified}}$ denotes verified multimodal factors and $\mathcal{P}$ represents mitigating conditions. Table I outlines the explicit parameter weighting.
+where <i>F<sub>m</sub></i> denotes verified multimodal emergency factors and <i>P<sub>n</sub></i> represents mitigating conditions. Table I outlines the explicit parameter weighting.
 </p>
 
 <div class="table-title">TABLE I</div>
@@ -368,7 +369,7 @@ where $\mathcal{F}_{\text{verified}}$ denotes verified multimodal factors and $\
     <tr>
       <th>Feature / Factor Component</th>
       <th>Operational Meaning</th>
-      <th>Weight ($\Delta S$)</th>
+      <th>Weight (&Delta;<i>S</i>)</th>
       <th>Provenance</th>
     </tr>
   </thead>
@@ -413,19 +414,19 @@ where $\mathcal{F}_{\text{verified}}$ denotes verified multimodal factors and $\
 </table>
 
 <p>
-Triage priority bands are established deterministically: P1 Critical ($S \ge 80$), P2 High ($60 \le S &lt; 80$), P3 Moderate ($40 \le S &lt; 60$), and P4 Low ($S &lt; 40$).
+Triage priority bands are established deterministically: P1 Critical (Score &ge; 80), P2 High (60 &le; Score &lt; 80), P3 Moderate (40 &le; Score &lt; 60), and P4 Low (Score &lt; 40).
 </p>
 
 <h3 class="subsec-heading">F. Model Training and Implementation Strategy</h3>
 <p>
-Training was conducted using PyTorch 2.2 on NVIDIA RTX / Apple Silicon unified architecture with mixed precision (FP16). We deployed the AdamW optimizer with decoupled weight decay ($\lambda = 0.01$). Differential learning rates were assigned to protect pre-trained backbones while rapidly optimizing fusion heads:
+Training was conducted using PyTorch 2.2 on NVIDIA RTX / Apple Silicon unified architecture with mixed precision (FP16). We deployed the AdamW optimizer with decoupled weight decay (&lambda; = 0.01). Differential learning rates were assigned to protect pre-trained backbones while rapidly optimizing fusion heads:
 </p>
 <ul class="ieee-list">
-  <li>$\eta_{\text{backbone}} = 5 \times 10^{-5}$ for EfficientNet-B2 and DistilBERT layers.</li>
-  <li>$\eta_{\text{fusion}} = 1 \times 10^{-3}$ for dense projection and classification layers.</li>
+  <li>Backbone learning rate: &eta;<sub>backbone</sub> = 5 &times; 10<sup>-5</sup> for EfficientNet-B2 and DistilBERT layers.</li>
+  <li>Fusion head learning rate: &eta;<sub>fusion</sub> = 1 &times; 10<sup>-3</sup> for dense projection and classification layers.</li>
 </ul>
 <p>
-A cosine annealing learning rate scheduler decreased learning rates across 30 epochs with 3 warm-up epochs. Dropout was scheduled from 0.30 to 0.20, accompanied by gradient norm clipping at 1.0. Cross-entropy loss with label smoothing ($\epsilon = 0.05$) penalized over-confident incorrect classifications.
+A cosine annealing learning rate scheduler decreased learning rates across 30 epochs with 3 warm-up epochs. Dropout was scheduled from 0.30 to 0.20, accompanied by gradient norm clipping at 1.0. Cross-entropy loss with label smoothing (&epsilon; = 0.05) penalized over-confident incorrect classifications.
 </p>
 
 <h2 class="sec-heading">IV. Results and Discussion</h2>
@@ -606,7 +607,7 @@ To contextualize our findings against international benchmarks, Table III compar
 Ablation experiments reveal the source of the model's predictive superiority. Computing the multimodal synergy metric:
 </p>
 <div class="formula-box">
-  $\Delta_{\text{synergy}} = F1_{\text{Multimodal}} - \max(F1_{\text{Vision}}, F1_{\text{Language}}) = 0.9830 - 0.9266 = \mathbf{+5.64\%}$
+  &Delta;<sub>synergy</sub> = <i>F</i>1<sub>Multimodal</sub> &minus; max(<i>F</i>1<sub>Vision</sub>, <i>F</i>1<sub>Language</sub>) = 0.9830 &minus; 0.9266 = <b>+5.64%</b>
 </div>
 <p>
 Relative to the vision baseline, the gain reaches <b>+9.73%</b>. When visual feeds are degraded by smoke or nighttime conditions, the language encoder maintains classification accuracy above 88%. Conversely, when citizen reports contain slang or ambiguous descriptions (&ldquo;huge waves crushing everything&rdquo;), the visual stream anchors the inference to <i>Flash Flood</i>, avoiding false alarms.
@@ -674,7 +675,7 @@ The complete end-to-end forward pass executes in <b>42.9 ms</b>, easily satisfyi
 
 <h3 class="subsec-heading">E. Error Analysis and Practical Robustness</h3>
 <p>
-Error analysis on the test split ($N = 450$) revealed an overall misclassification rate of only <b>2.02%</b> (9 instances). Most errors arose from hyperbolic citizen phrasing (&ldquo;the whole city is dead&rdquo;) despite visual imagery indicating minor surface water accumulation.
+Error analysis on the test split (<i>N</i> = 450) revealed an overall misclassification rate of only <b>2.02%</b> (9 instances). Most errors arose from hyperbolic citizen phrasing (&ldquo;the whole city is dead&rdquo;) despite visual imagery indicating minor surface water accumulation.
 </p>
 
 <div class="figure-box">
