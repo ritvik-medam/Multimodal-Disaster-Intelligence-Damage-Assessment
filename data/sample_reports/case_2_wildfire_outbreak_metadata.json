@@ -1,0 +1,13 @@
+{
+  "name": "case_2_wildfire_outbreak",
+  "category": "wildfire",
+  "damage": "destroyed",
+  "text": "Fast-moving brushfire driven by 55mph winds crossed highway 12 into Highland Ridge. Five homes completely destroyed, twelve others actively burning. Power substation ignited. Zero visibility due to dense smoke.",
+  "location_name": "Highland Ridge Forest Boundary",
+  "latitude": 34.0522,
+  "longitude": -118.2437,
+  "deaths": 0,
+  "injuries": 6,
+  "missing": 1,
+  "displaced": 350
+}

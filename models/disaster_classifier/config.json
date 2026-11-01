@@ -1,0 +1,42 @@
+{
+  "architecture": "efficientnet_b2",
+  "pretrained": true,
+  "num_classes": 6,
+  "image_size": 224,
+  "batch_size": 32,
+  "epochs": 50,
+  "learning_rate": 0.0001,
+  "weight_decay": 0.01,
+  "patience": 7,
+  "min_delta": 0.001,
+  "label_smoothing": 0.1,
+  "use_mixup": true,
+  "mixup_alpha": 0.2,
+  "dataset_name": "medic",
+  "data_dir": "data/processed/image_classifier",
+  "splits_dir": "data/splits/image_classifier",
+  "augmentation": {
+    "random_horizontal_flip": true,
+    "random_rotation": 15,
+    "color_jitter": true,
+    "random_erasing": true
+  },
+  "device": "auto",
+  "num_workers": 4,
+  "pin_memory": true,
+  "mixed_precision": false,
+  "checkpoint_dir": "models/disaster_classifier",
+  "save_best_only": true,
+  "checkpoint_metric": "val_f1_macro",
+  "log_interval": 10,
+  "log_dir": "logs/image_classifier",
+  "seed": 42,
+  "label_map": {
+    "cyclone_storm": 0,
+    "earthquake": 1,
+    "flood": 2,
+    "landslide": 3,
+    "not_disaster": 4,
+    "wildfire": 5
+  }
+}

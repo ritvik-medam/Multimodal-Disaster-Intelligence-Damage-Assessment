@@ -1,0 +1,31 @@
+{
+  "architecture": "resnet50",
+  "pretrained": true,
+  "num_classes": 4,
+  "image_size": 224,
+  "batch_size": 16,
+  "epochs": 40,
+  "learning_rate": 0.0001,
+  "weight_decay": 0.01,
+  "patience": 8,
+  "label_smoothing": 0.05,
+  "dataset_name": "xbd",
+  "data_dir": "data/processed/damage_assessment",
+  "splits_dir": "data/splits/damage_assessment",
+  "use_post_only": true,
+  "imagery_type": "satellite",
+  "use_class_weights": true,
+  "device": "auto",
+  "num_workers": 4,
+  "checkpoint_dir": "models/damage_assessment",
+  "save_best_only": true,
+  "checkpoint_metric": "val_f1_macro",
+  "log_dir": "logs/damage_assessment",
+  "seed": 42,
+  "label_map": {
+    "no_damage": 0,
+    "minor_damage": 1,
+    "major_damage": 2,
+    "destroyed": 3
+  }
+}

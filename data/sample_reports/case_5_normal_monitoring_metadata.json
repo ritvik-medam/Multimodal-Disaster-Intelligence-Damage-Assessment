@@ -1,0 +1,13 @@
+{
+  "name": "case_5_normal_monitoring",
+  "category": "not_disaster",
+  "damage": "no_damage",
+  "text": "Routine aerial monitoring of West Valley water reservoir. Water levels within standard seasonal thresholds. All spillways operating nominally with zero structural anomalies detected.",
+  "location_name": "West Valley Reservoir Dam",
+  "latitude": 36.1699,
+  "longitude": -115.1398,
+  "deaths": 0,
+  "injuries": 0,
+  "missing": 0,
+  "displaced": 0
+}

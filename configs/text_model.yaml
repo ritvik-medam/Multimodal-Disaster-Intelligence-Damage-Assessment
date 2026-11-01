@@ -1,0 +1,30 @@
+model_name: distilbert-base-uncased
+num_classes: null           # filled from dataset
+max_length: 128
+batch_size: 32
+epochs: 10
+learning_rate: 2.0e-5
+weight_decay: 0.01
+warmup_ratio: 0.1
+patience: 3
+label_smoothing: 0.05
+
+# Data
+dataset_name: crisismmd_text
+data_dir: data/processed/text_classifier
+splits_dir: data/splits/text_classifier
+
+# Hardware
+device: auto
+num_workers: 2
+
+# Checkpoints
+checkpoint_dir: models/text_classifier
+save_best_only: true
+checkpoint_metric: val_f1_macro
+
+# Logging
+log_dir: logs/text_classifier
+
+# Reproducibility
+seed: 42

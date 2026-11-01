@@ -1,0 +1,38 @@
+architecture: resnet50
+pretrained: true
+num_classes: 4              # no_damage, minor_damage, major_damage, destroyed
+image_size: 224
+batch_size: 16
+epochs: 40
+learning_rate: 0.0001
+weight_decay: 0.01
+patience: 8
+label_smoothing: 0.05
+
+# Data
+dataset_name: xbd
+data_dir: data/processed/damage_assessment
+splits_dir: data/splits/damage_assessment
+# xBD uses pre/post image pairs
+use_post_only: true         # Set false for dual-image input
+
+# Imagery type — CRITICAL: model trained on satellite images only
+imagery_type: satellite
+
+# Class weights (for imbalanced xBD data)
+use_class_weights: true
+
+# Hardware
+device: auto
+num_workers: 4
+
+# Checkpoints
+checkpoint_dir: models/damage_assessment
+save_best_only: true
+checkpoint_metric: val_f1_macro
+
+# Logging
+log_dir: logs/damage_assessment
+
+# Reproducibility
+seed: 42

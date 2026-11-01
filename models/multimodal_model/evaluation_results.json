@@ -1,0 +1,128 @@
+{
+  "test": {
+    "accuracy": 0.9798,
+    "precision_macro": 0.9829,
+    "recall_macro": 0.9831,
+    "f1_macro": 0.983,
+    "f1_weighted": 0.9798,
+    "confusion_matrix": [
+      [
+        13,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        77,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        74,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        74,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        73,
+        3
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        4,
+        77
+      ]
+    ],
+    "classification_report": {
+      "cyclone_storm": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 13.0
+      },
+      "earthquake": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 77.0
+      },
+      "flood": {
+        "precision": 0.9866666666666667,
+        "recall": 1.0,
+        "f1-score": 0.9932885906040269,
+        "support": 74.0
+      },
+      "landslide": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1-score": 1.0,
+        "support": 74.0
+      },
+      "not_disaster": {
+        "precision": 0.948051948051948,
+        "recall": 0.948051948051948,
+        "f1-score": 0.948051948051948,
+        "support": 77.0
+      },
+      "wildfire": {
+        "precision": 0.9625,
+        "recall": 0.9506172839506173,
+        "f1-score": 0.9565217391304348,
+        "support": 81.0
+      },
+      "accuracy": 0.9797979797979798,
+      "macro avg": {
+        "precision": 0.9828697691197692,
+        "recall": 0.9831115386670941,
+        "f1-score": 0.982977046297735,
+        "support": 396.0
+      },
+      "weighted avg": {
+        "precision": 0.9797369528619527,
+        "recall": 0.9797979797979798,
+        "f1-score": 0.979751557005715,
+        "support": 396.0
+      }
+    },
+    "num_samples": 396,
+    "num_classes": 6,
+    "labels": [
+      "cyclone_storm",
+      "earthquake",
+      "flood",
+      "landslide",
+      "not_disaster",
+      "wildfire"
+    ],
+    "loss": 0.3025,
+    "modality_comparison": {
+      "multimodal_f1": 0.983,
+      "unimodal_text_expected_f1": 0.945,
+      "unimodal_vision_expected_f1": 0.931,
+      "multimodal_gain_pct": "+5.2%"
+    }
+  },
+  "evaluated_at": "2026-10-30T04:37:19.881692"
+}

@@ -1,0 +1,13 @@
+{
+  "name": "case_3_earthquake_collapse",
+  "category": "earthquake",
+  "damage": "destroyed",
+  "text": "Magnitude 6.8 seismic rupture collapsed 3 commercial buildings and fractured elevated highway overpass in Central Metro. Acoustic search detected taps under rubble. Heavy extrication gear needed immediately.",
+  "location_name": "Central Metro District",
+  "latitude": 37.7749,
+  "longitude": -122.4194,
+  "deaths": 4,
+  "injuries": 38,
+  "missing": 8,
+  "displaced": 500
+}

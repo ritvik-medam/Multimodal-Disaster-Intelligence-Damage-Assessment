@@ -1,0 +1,6 @@
+{
+  "no_damage": 0,
+  "minor_damage": 1,
+  "major_damage": 2,
+  "destroyed": 3
+}

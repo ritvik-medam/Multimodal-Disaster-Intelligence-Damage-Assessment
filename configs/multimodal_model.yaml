@@ -1,0 +1,42 @@
+vision_encoder: efficientnet_b2
+text_encoder: distilbert-base-uncased
+fusion_method: concat_mlp   # concat_mlp | cross_attention | bilinear
+num_classes: null
+fusion_hidden_dim: 512
+dropout: 0.3
+
+image_size: 224
+max_text_length: 128
+batch_size: 16
+epochs: 20
+learning_rate: 5.0e-5
+weight_decay: 0.01
+warmup_ratio: 0.1
+patience: 5
+
+# Frozen encoders
+freeze_vision_encoder: false
+freeze_text_encoder: false
+
+# Data
+dataset_name: crisismmd_multimodal
+data_dir: data/processed/multimodal
+splits_dir: data/splits/multimodal
+
+# Comparison experiment
+run_comparison: true        # Also train image-only and text-only models for comparison
+
+# Hardware
+device: auto
+num_workers: 2
+
+# Checkpoints
+checkpoint_dir: models/multimodal_model
+save_best_only: true
+checkpoint_metric: val_f1_macro
+
+# Logging
+log_dir: logs/multimodal
+
+# Reproducibility
+seed: 42

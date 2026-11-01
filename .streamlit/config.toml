@@ -1,0 +1,15 @@
+[server]
+runOnSave = true
+headless = true
+
+[theme]
+base = "dark"
+primaryColor = "#38bdf8"
+backgroundColor = "#090d16"
+secondaryBackgroundColor = "#101828"
+textColor = "#f8fafc"
+font = "sans serif"
+
+[client]
+toolbarMode = "viewer"
+showErrorDetails = false

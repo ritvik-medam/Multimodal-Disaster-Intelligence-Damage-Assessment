@@ -1,0 +1,13 @@
+{
+  "name": "case_4_cyclone_surge",
+  "category": "cyclone_storm",
+  "damage": "major_damage",
+  "text": "Category 4 tropical cyclone landfall generated 14-foot storm surge. Hospital emergency wing flooded and lost grid power. Backup generator running low on diesel. 80 critical patients require priority triage.",
+  "location_name": "Coastal Bay General Hospital",
+  "latitude": 25.7617,
+  "longitude": -80.1918,
+  "deaths": 2,
+  "injuries": 25,
+  "missing": 0,
+  "displaced": 200
+}

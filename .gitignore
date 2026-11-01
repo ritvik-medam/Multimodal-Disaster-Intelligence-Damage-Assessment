@@ -1,0 +1,80 @@
+# Virtual environment
+venv/
+.venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+
+# Model weights (large binary files >100MB)
+*.pt
+*.pth
+*.bin
+*.safetensors
+*.ckpt
+*.h5
+*.pkl
+models/**/*.pt
+models/**/*.pth
+models/**/*.bin
+models/**/*.safetensors
+models/**/*.ckpt
+models/**/*.h5
+models/**/*.pkl
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
+
+# Dataset raw files
+data/raw/
+data/processed/
+data/uploads/
+data/splits/
+
+# Logs
+logs/
+*.log
+training_logs/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Pytest
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Outputs
+outputs/
+results/
+annotated/
+
+# Keep these tracked
+!models/.gitkeep
+!data/uploads/.gitkeep
+!data/processed/.gitkeep
+!data/raw/.gitkeep
+!data/sample_reports/.gitkeep

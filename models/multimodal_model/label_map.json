@@ -1,0 +1,8 @@
+{
+  "cyclone_storm": 0,
+  "earthquake": 1,
+  "flood": 2,
+  "landslide": 3,
+  "not_disaster": 4,
+  "wildfire": 5
+}

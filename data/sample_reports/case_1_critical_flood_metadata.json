@@ -1,0 +1,13 @@
+{
+  "name": "case_1_critical_flood",
+  "category": "flood",
+  "damage": "major_damage",
+  "text": "Flash flood breached coastal embankment at Riverside. Over 40 families trapped on upper floors. Severe water currents preventing small boat rescue. Urgent helicopter airlift and medical evacuation requested.",
+  "location_name": "Riverside Marina, Sector 4",
+  "latitude": 29.9511,
+  "longitude": -90.0715,
+  "deaths": 1,
+  "injuries": 14,
+  "missing": 3,
+  "displaced": 120
+}
