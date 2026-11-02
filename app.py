@@ -38,11 +38,11 @@ st.markdown("""
 <div class="hero-banner">
     <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;">
         <div style="display:flex; align-items:center; gap:8px;">
-            <span class="cyber-badge badge-p1-glow">🚨 Autonomous Emergency AI</span>
+            <span class="cyber-badge badge-p1-glow">🚨 Emergency Operations Command</span>
             <span class="cyber-badge badge-p4-glow"><span class="pulse-dot-emerald"></span> Operational Readiness Active</span>
         </div>
         <div style="color:var(--text-secondary); font-size:0.85rem; font-weight:600; letter-spacing:0.02em;">
-            Dual-Encoder Fusion Engine &bull; YOLOv8 &bull; DistilBERT &bull; EfficientNet &bull; ResNet
+            Integrated Multi-Source Assessment & Triage Engine
         </div>
     </div>
     <h1 style="margin-top:1rem; font-size:2.8rem; line-height:1.2;">
@@ -66,10 +66,10 @@ with col1:
             <span>👁️</span> Vision Subsystem
         </div>
         <div style="font-weight:700; color:var(--text-primary); font-size:1.1rem; margin:0.5rem 0 0.35rem 0;">
-            Dual-Stream CV
+            Visual Reconnaissance
         </div>
         <div style="color:var(--text-secondary); font-size:0.85rem; line-height:1.5;">
-            EfficientNet-B2 classification (87.4%), ResNet-50 damage scoring (100%), and real-time YOLOv8n object detection (~12ms).
+            Aerial visual classification (87.4%), structural damage assessment (100%), and real-time hazard detection (~12ms).
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -81,10 +81,10 @@ with col2:
             <span>📝</span> NLP Subsystem
         </div>
         <div style="font-weight:700; color:var(--text-primary); font-size:1.1rem; margin:0.5rem 0 0.35rem 0;">
-            Language Transformers
+            Field Report Analysis
         </div>
         <div style="color:var(--text-secondary); font-size:0.85rem; line-height:1.5;">
-            Fine-tuned DistilBERT intent model (88.9% Acc / 92.7% F1) with deterministic regex entity and trapped-count extraction.
+            Automated dispatch narrative parsing (88.9% Acc / 92.7% F1) with priority entity and trapped-count extraction.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -96,10 +96,10 @@ with col3:
             <span>🔗</span> Multimodal Fusion
         </div>
         <div style="font-weight:700; color:var(--text-primary); font-size:1.1rem; margin:0.5rem 0 0.35rem 0;">
-            Dual-Encoder Joint MLP
+            Cross-Modal Intelligence
         </div>
         <div style="color:var(--text-secondary); font-size:0.85rem; line-height:1.5;">
-            Late-fusion Dual Encoder achieving <b>98.3% F1</b> (+9.7% synergy gain) with cross-modal consistency verification.
+            Unified multimodal assessment achieving <b>98.3% F1</b> (+9.7% synergy gain) with cross-source consistency verification.
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -111,7 +111,7 @@ with col4:
             <span>🎯</span> Decision Triage
         </div>
         <div style="font-weight:700; color:var(--text-primary); font-size:1.1rem; margin:0.5rem 0 0.35rem 0;">
-            Deterministic Priority
+            Operational Dispatch Triage
         </div>
         <div style="color:var(--text-secondary); font-size:0.85rem; line-height:1.5;">
             Explainable 0–100 severity scoring, interactive geospatial GIS overlays, and 1-click official SITREP generation.

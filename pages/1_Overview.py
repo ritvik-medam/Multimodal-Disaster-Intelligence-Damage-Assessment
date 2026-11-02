@@ -31,44 +31,44 @@ st.markdown("""
             <span>📊</span> <span>Operational Overview <span class="gradient-text">Command Center</span></span>
         </h1>
         <p style="color:var(--text-secondary); margin:0.35rem 0 0 0; font-size:0.95rem;">
-            Real-time multi-modal triage intelligence, neural telemetry & synchronized emergency logs
+            Real-time multi-source triage intelligence, emergency telemetry & synchronized incident logs
         </p>
     </div>
     <div style="display:flex; align-items:center; gap:10px;">
         <span class="cyber-badge badge-p4-glow">
-            <span class="pulse-dot-emerald"></span> All Neural Engines Nominal
+            <span class="pulse-dot-emerald"></span> All Systems Operational
         </span>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ── Neural Subsystem Live Telemetry Ribbon ───────────────────
+# ── Operations Live Telemetry Ribbon ─────────────────────────
 st.markdown("""
 <div class="telemetry-bar">
     <div class="telemetry-item">
-        <span>🏆</span> <span>Dual-Encoder Fusion:</span> 
+        <span>🏆</span> <span>Cross-Modal Assessment:</span> 
         <span class="telemetry-value">98.3% F1</span> 
-        <span style="color:#10b981; font-size:0.75rem;">(+9.7% Synergy)</span>
+        <span style="color:#10b981; font-size:0.75rem;">(Verified)</span>
     </div>
     <div class="telemetry-item">
-        <span>🌪️</span> <span>EfficientNet Vision:</span> 
+        <span>🌪️</span> <span>Aerial Reconnaissance:</span> 
         <span class="telemetry-value">87.4% Acc</span>
-        <span style="color:#38bdf8; font-size:0.75rem;">(B2 Backbone)</span>
+        <span style="color:#38bdf8; font-size:0.75rem;">(High Resolution)</span>
     </div>
     <div class="telemetry-item">
-        <span>📝</span> <span>DistilBERT NLP:</span> 
+        <span>📝</span> <span>Dispatch Intelligence:</span> 
         <span class="telemetry-value">88.9% Acc</span>
-        <span style="color:#38bdf8; font-size:0.75rem;">(Transformer)</span>
+        <span style="color:#38bdf8; font-size:0.75rem;">(Semantic Extraction)</span>
     </div>
     <div class="telemetry-item">
-        <span>🏚️</span> <span>ResNet-50 Damage:</span> 
+        <span>🏚️</span> <span>Structural Assessment:</span> 
         <span class="telemetry-value">100.0% Acc</span>
         <span style="color:#10b981; font-size:0.75rem;">(Satellite Tiers)</span>
     </div>
     <div class="telemetry-item">
-        <span>🎯</span> <span>YOLOv8n Edge:</span> 
+        <span>🎯</span> <span>Hazard Scanner:</span> 
         <span class="telemetry-value">~12ms</span>
-        <span style="color:#a855f7; font-size:0.75rem;">(COCO 80 Cls)</span>
+        <span style="color:#a855f7; font-size:0.75rem;">(Real-Time Edge)</span>
     </div>
 </div>
 """, unsafe_allow_html=True)

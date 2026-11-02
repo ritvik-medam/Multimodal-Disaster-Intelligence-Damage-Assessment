@@ -19,11 +19,11 @@ apply_custom_theme()
 st.markdown("""
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:10px;">
     <div>
-        <h1 style="margin:0;">📝 NLP Emergency Semantics & Entity Extraction</h1>
-        <p style="color:var(--text-secondary); margin:0.25rem 0 0 0;">DistilBERT intent classification, regex rule parsing, and geolocational named-entity extraction.</p>
+        <h1 style="margin:0;">📝 Emergency Dispatch & Incident Text Analytics</h1>
+        <p style="color:var(--text-secondary); margin:0.25rem 0 0 0;">Automated dispatch narrative parsing, casualty & rescue need identification, and emergency geolocation extraction.</p>
     </div>
     <div>
-        <span class="cyber-badge badge-p3-glow">DistilBERT Language Model</span>
+        <span class="cyber-badge badge-p3-glow">Field Communications Intelligence</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
