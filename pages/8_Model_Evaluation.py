@@ -78,44 +78,44 @@ with st.container(border=True):
 
     benchmark_rows = [
         {
-            "System / Subsystem": "🏆 Integrated Multi-Source Assessment",
+            "System / Subsystem": "🏆 Multimodal Dual-Encoder",
             "Modality": "Vision + Text",
-            "Architecture": "Cross-Modal Synchronized Dual-Stream",
+            "Architecture": "EfficientNet-B2 + DistilBERT + MLP",
             "Test Accuracy": "97.98%",
             "Macro F1": "0.9830",
-            "Status": "✅ Operational Active",
+            "Status": "✅ Trained Checkpoint Active",
         },
         {
-            "System / Subsystem": "📝 Dispatch Text Intelligence",
-            "Modality": "Reports & Communications",
-            "Architecture": "Emergency Language Transformer",
+            "System / Subsystem": "📝 Disaster NLP Classifier",
+            "Modality": "Text (Reports & Social)",
+            "Architecture": "DistilBERT (Fine-Tuned)",
             "Test Accuracy": "88.91%",
             "Macro F1": "0.9266",
-            "Status": "✅ Operational Active",
+            "Status": "✅ Trained Checkpoint Active",
         },
         {
-            "System / Subsystem": "🌪 Aerial Visual Classification",
+            "System / Subsystem": "🌪 Disaster Vision Classifier",
             "Modality": "Aerial & Ground RGB",
-            "Architecture": "High-Resolution Visual Backbone",
+            "Architecture": "EfficientNet-B2",
             "Test Accuracy": "87.37%",
             "Macro F1": "0.8857",
-            "Status": "✅ Operational Active",
+            "Status": "✅ Trained Checkpoint Active",
         },
         {
             "System / Subsystem": "🏚 Structural Damage Assessment",
             "Modality": "Satellite & Drone",
-            "Architecture": "Satellite Structural Classifier",
+            "Architecture": "ResNet-50",
             "Test Accuracy": "100.0%",
             "Macro F1": "1.0000",
-            "Status": "✅ Operational Active",
+            "Status": "✅ Trained Checkpoint Active",
         },
         {
-            "System / Subsystem": "🎯 Real-Time Hazard Reconnaissance",
-            "Modality": "Live Video / Imagery",
-            "Architecture": "Edge Vision Engine",
-            "Test Accuracy": "Stream Synchronized",
-            "Macro F1": "80 Hazard Categories",
-            "Status": "✅ Operational Active",
+            "System / Subsystem": "🎯 Edge Object Detection",
+            "Modality": "Real-Time Video/RGB",
+            "Architecture": "Ultralytics YOLOv8n",
+            "Test Accuracy": "37.3% mAP",
+            "Macro F1": "COCO 80 Cls",
+            "Status": "✅ COCO Pre-trained",
         },
     ]
 
@@ -125,14 +125,14 @@ with st.container(border=True):
 st.divider()
 
 # ── 2. Tabbed Deep Dive ────────────────────────────────────────
-st.subheader("🔬 Detailed Subsystem Specifications & Validation Reports")
+st.subheader("🔬 Detailed Model Specifications & Test Reports")
 
 tab_mm, tab_vision, tab_nlp, tab_damage, tab_yolo = st.tabs([
-    "🏆 Cross-Modal Synergy",
-    "🌪 Aerial Visual Classification",
-    "📝 Field Text Intelligence",
-    "🏚 Structural Damage Assessment",
-    "🎯 On-Scene Hazard Reconnaissance",
+    "🏆 Multimodal Synergy",
+    "🌪 Disaster Vision (EfficientNet)",
+    "📝 Disaster NLP (DistilBERT)",
+    "🏚 Damage Assessment (ResNet)",
+    "🎯 Object Detection (YOLOv8)",
 ])
 
 # ── TAB 1: Multimodal Fusion ──
@@ -212,12 +212,12 @@ with tab_damage:
         rep_df = pd.DataFrame(d_test["classification_report"]).T
         st.dataframe(rep_df, use_container_width=True)
 
-# ── TAB 5: Hazard Reconnaissance ──
+# ── TAB 5: Object Detection ──
 with tab_yolo:
     c1, c2, c3 = st.columns(3)
-    c1.metric("Engine", "Real-Time Hazard Scanner")
-    c2.metric("Processing Profile", "Edge-Optimized Stream")
+    c1.metric("Model", "YOLOv8n (Nano)")
+    c2.metric("Parameters", "3.2 Million")
     c3.metric("Latency", "~12ms / Frame (Real-Time)")
 
-    st.write("**Operational Capabilities:** Real-time on-scene localization of trapped personnel, rescue craft, emergency vehicles, and perimeter hazards.")
-    st.write("**Monitored Classes:** 80 mission-critical categories including victims, rescue boats, ambulances, fire hydrants, and access vehicles.")
+    st.write("**Capabilities:** On-scene localization of people, vehicles, boats, and response assets for aerial and ground situational awareness.")
+    st.write("**Target Classes:** 80 COCO categories including `person`, `boat`, `car`, `truck`, `bus`, `fire hydrant`.")

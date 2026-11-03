@@ -24,7 +24,7 @@ st.markdown("""
         <p style="color:var(--text-secondary); margin:0.25rem 0 0 0;">Cross-modal evidence fusion, conflict resolution, and deterministic severity scoring.</p>
     </div>
     <div>
-        <span class="cyber-badge badge-p2-glow">Integrated Multi-Source Assessment</span>
+        <span class="cyber-badge badge-p2-glow">Dual-Encoder Fusion Engine</span>
     </div>
 </div>
 """, unsafe_allow_html=True)

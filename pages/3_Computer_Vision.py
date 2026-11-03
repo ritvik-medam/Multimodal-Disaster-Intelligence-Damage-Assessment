@@ -21,11 +21,11 @@ apply_custom_theme()
 st.markdown("""
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.5rem; flex-wrap:wrap; gap:10px;">
     <div>
-        <h1 style="margin:0;">👁 Visual Reconnaissance & Damage Assessment</h1>
-        <p style="color:var(--text-secondary); margin:0.25rem 0 0 0;">Automated hazard reconnaissance, structural damage classification, and aerial video stream timeline.</p>
+        <h1 style="margin:0;">👁 Computer Vision Subsystem & Visual Intelligence</h1>
+        <p style="color:var(--text-secondary); margin:0.25rem 0 0 0;">Multi-modal object bounding boxes, structural damage assessment, and video stream timeline.</p>
     </div>
     <div>
-        <span class="cyber-badge badge-p1-glow">Active Visual Surveillance Engine</span>
+        <span class="cyber-badge badge-p1-glow">YOLOv8 + EfficientNet + ResNet</span>
     </div>
 </div>
 """, unsafe_allow_html=True)
@@ -135,8 +135,9 @@ if orig_img and det:
 
     st.divider()
 
-    st.subheader("🎯 Real-Time Object & Hazard Detections")
-    st.caption("On-scene emergency target reconnaissance: monitors personnel, vehicles, rescue craft, and perimeter hazards.")
+    # Object detection results
+    st.subheader("🎯 Object Detection Results")
+    st.caption("Model: YOLOv8n (Pretrained on COCO — detects on-scene people, vehicles, boats)")
 
     detected = det.get("detected_objects", [])
     counts   = det.get("object_counts", {}) or _build_counts(detected)

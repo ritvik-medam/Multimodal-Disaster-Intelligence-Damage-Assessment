@@ -4,8 +4,9 @@ Validates uploaded images and videos before processing.
 """
 import os
 import io
+import re
 from pathlib import Path
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Any
 from src.utils.logging_config import get_logger
 from src.utils import configuration as cfg
 
@@ -108,6 +109,70 @@ def validate_text_report(text: str) -> Tuple[bool, str]:
         return False, "Report is too long. Max 50,000 characters."
 
     return True, ""
+
+
+def _parse_single_coord_token(token: Any) -> Optional[float]:
+    """Parses a single coordinate string, recognizing cardinal directions (N/S/E/W)."""
+    if token is None:
+        return None
+    s = str(token).strip().upper()
+    if not s:
+        return None
+    multiplier = 1.0
+    if "S" in s or "W" in s:
+        multiplier = -1.0
+    cleaned = re.sub(r"[^0-9.-]", "", s)
+    if not cleaned or cleaned in ("-", ".", "-."):
+        return None
+    try:
+        return float(cleaned) * multiplier
+    except ValueError:
+        return None
+
+
+def parse_and_normalize_coordinates(
+    lat_raw: Any, 
+    lon_raw: Any = None
+) -> Tuple[Optional[float], Optional[float], str]:
+    """
+    Intelligently parses, extracts, normalizes, and validates coordinate inputs.
+    
+    Handles:
+    1. Single input containing comma/space separated pairs: "13.0827, 80.2707"
+    2. Cardinal directional inputs: "3.4653 S", "62.2159 W" -> (-3.4653, -62.2159)
+    3. Swapped latitude & longitude: if |lat| > 90 and |lon| <= 90, auto-swaps them.
+    
+    Returns:
+        (latitude_float, longitude_float, message)
+    """
+    lat_s = str(lat_raw or "").strip()
+    lon_s = str(lon_raw or "").strip()
+    
+    if not lat_s and not lon_s:
+        return None, None, ""
+
+    # Check if a combined coordinate string was pasted into lat_raw (e.g., "13.0827, 80.2707")
+    if ("," in lat_s or " " in lat_s) and not lon_s:
+        parts = [p.strip() for p in re.split(r"[,;\s]+", lat_s) if p.strip()]
+        if len(parts) >= 2:
+            lat_s, lon_s = parts[0], parts[1]
+
+    lat = _parse_single_coord_token(lat_s)
+    lon = _parse_single_coord_token(lon_s)
+
+    if lat is None and lon is None:
+        return None, None, "Coordinates could not be parsed as numeric values."
+    if lat is None or lon is None:
+        return None, None, "Both latitude and longitude must be provided."
+
+    msg = ""
+    # Auto-detect swapped coordinates where user placed longitude in the latitude field
+    # (e.g. lat = 120.5 and lon = 14.2)
+    if (abs(lat) > 90 and abs(lon) <= 90):
+        lat, lon = lon, lat
+        msg = f"Inverted coordinates detected and corrected: Latitude {lat:.4f}, Longitude {lon:.4f}."
+
+    return lat, lon, msg
 
 
 def validate_coordinates(lat: Optional[float], lon: Optional[float]) -> Tuple[bool, str]:
